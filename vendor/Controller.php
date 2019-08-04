@@ -10,7 +10,6 @@ abstract class Controller
 	/**
 	* Each controller have to release Singleton pattern
 	*/
-    //abstract public static function getInstance();
 
 	/**
 	* This method runs action.
@@ -30,16 +29,11 @@ abstract class Controller
     /**
 	* Render 'view' file
 	*/
-	public function render($viewName, $options = [])
+	public function render($viewName, $variabels = [])
 	{
-        if(!empty($options)){
-
-		}
-
 		$controllerClass = explode('controllers\\', get_class($this))[1];
 		$view = new View();
 
-        $view->init($controllerClass, $viewName, $options);
-
+        $view->init($controllerClass, $viewName, $variabels);
 	}
 }

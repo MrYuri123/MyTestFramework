@@ -12,7 +12,9 @@ class FirstController extends Controller
 
 	public function actionIndex()
 	{
-		$this->render('index');
+		$this->render('index', [
+			'test' => 'Test value!',
+		]);
 	}
 
 	public function actionSecond()

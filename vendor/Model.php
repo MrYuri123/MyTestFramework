@@ -57,7 +57,7 @@ class Model
 	public function findWhere($param, $searchColumn = null)
 	{
 		$result = [];
-        if ($searchItem === null){
+        if ($searchColumn === null){
 			$key = key($param);
 			$query = "SELECT * FROM `album` WHERE `$key` = '$param[$key]'";
 			$queryResult = $this->_DB->query($query);
