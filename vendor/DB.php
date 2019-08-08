@@ -2,6 +2,9 @@
 namespace vendor;
 
 include_once "/config/database.php";
+require_once "autoload.php";
+
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
 * Class Model use this class for db requests.
@@ -9,46 +12,20 @@ include_once "/config/database.php";
 */
 class DB
 {
-	private static $_instance = null;
-
-	private function __construct () {
-
-        try {
-			$this->_instance = new \PDO(
-				'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME,
-		    	DB_USER,
-		    	DB_PASS
-		    );
-		} catch (\PDOException $e) {
-		    print "Error!: " . $e->getMessage() . "<br/>";
-		    die();
-		}
-	}
-
-	private function __clone () {}
-	private function __wakeup () {}
-
-	public static function getInstance()
+	public function __construct()
 	{
-		if (self::$_instance != null) {
-			return self::$_instance;
-		}
+		$capsule = new Capsule();
+		$capsule->addConnection([
+			"driver"    => DB_DRIVER,
+			"host"      => DB_HOST,
+			"database"  => DB_NAME,
+			"username"  => DB_USER,
+			"password"  => DB_PASS,
+			"charset"   => "utf8",
+			"collation" => "utf8_unicode_ci",
+			"prefix"    => "",
+		]);
 
-		return new self;
-	}
-
-    public function query($params)
-	{
-		return $this->_instance->query($params);
-	}
-
-	public function prepare($query)
-	{
-		return $this->_instance->prepare($query);
-	}
-
-	public function execute($statment)
-	{
-		return $statment->execute();
+		$capsule->bootEloquent();
 	}
 }

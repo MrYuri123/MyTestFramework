@@ -7,9 +7,15 @@ function autoload_func($className) {
       }
       return false;
 }
- spl_autoload_register('autoload_func');
+spl_autoload_register('autoload_func');
+require_once "/vendor/autoload.php";
 
 use vendor\Fm;
+use vendor\DB;
 
+//boot Eloquent ORM
+$db = new DB();
+
+//boot framework
 $app = new Fm();
 $app->__run();
